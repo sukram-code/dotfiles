@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ln -sf $PWD/gitconfig $HOME/.gitconfig
+ls -l $HOME/.gitconfig
+

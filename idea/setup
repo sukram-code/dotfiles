@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ln -sf $PWD/ideavimrc $HOME/.ideavimrc
+ls -l $HOME/.ideavimrc
+

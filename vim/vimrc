@@ -1,0 +1,177 @@
+syntax on 
+
+set noerrorbells
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set number relativenumber
+set nowrap
+set nohlsearch
+set hidden
+set smartcase
+set ignorecase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set scrolloff=8
+set noshowmode
+set laststatus=2
+set background=dark
+set termguicolors
+set backspace=indent,eol,start
+
+set colorcolumn=80
+set signcolumn=yes
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+call plug#begin('~/.vim/plugged')
+Plug 'gruvbox-community/gruvbox'
+Plug 'tpope/vim-fugitive'
+Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim' 
+Plug 'airblade/vim-rooter'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
+hi Normal guibg=NONE ctermbg=NONE
+
+" start at last place you were editing
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" disable arrow keys (vi muscle memory)
+noremap <up> :echoerr "Umm, use k instead"<CR>
+noremap <down> :echoerr "Umm, use j instead"<CR>
+noremap <left> :echoerr "Umm, use h instead"<CR>
+noremap <right> :echoerr "Umm, use l instead"<CR>
+inoremap <up> <NOP>
+inoremap <down> <NOP>
+inoremap <left> <NOP>
+inoremap <right> <NOP>
+
+" center cursor vertically
+nnoremap j jzz
+nnoremap k kzz
+
+let mapleader = " "
+
+" copy to primary buffer or clipboard
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
+
+" insert current date
+map <Leader>D :put =strftime('%F')<CR>
+
+let $RTP=split(&runtimepath, ',')[0]
+let $RC="$HOME/.vim/vimrc"
+
+" windows
+set splitbelow
+set splitright
+
+nnoremap <Leader>wv <C-W><C-V>
+nnoremap <Leader>ws <C-W><C-S>
+
+nnoremap <Leader>wc <C-W>c
+nnoremap <Leader>wo <C-W>o
+
+nnoremap <Leader>wj <C-W><C-J>
+nnoremap <Leader>wk <C-W><C-K>
+nnoremap <Leader>wl <C-W><C-L>
+nnoremap <Leader>wh <C-W><C-H>
+
+" FZF setup
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+let $FZF_DEFAULT_OPTS = '--layout=reverse --inline-info'
+let $FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git/**'"
+
+" da gruv colors
+let g:fzf_colors = {
+            \ 'fg':      ['fg', 'GruvboxFg1'],
+            \ 'bg':      ['bg', 'GruvboxBg0'],
+            \ 'hl':      ['fg', 'GruvboxYellow'],
+            \ 'fg+':     ['fg', 'GruvboxFg1'],
+            \ 'bg+':     ['bg', 'GruvboxBg1'],
+            \ 'hl+':     ['fg', 'GruvboxYellow'],
+            \ 'info':    ['fg', 'GruvboxBlue'],
+            \ 'prompt':  ['fg', 'GruvboxFg4'],
+            \ 'pointer': ['fg', 'GruvboxBlue'],
+            \ 'marker':  ['fg', 'GruvboxOrange'],
+            \ 'spinner': ['fg', 'GruvboxYellow'],
+            \ 'header':  ['fg', 'GruvboxBg3']
+            \ }
+" Enable per-command history
+" " - History files will be stored in the specified directory
+" " - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+" "   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+nnoremap <Leader>fih :FZF ~<CR>
+nnoremap <Leader>faf :Files<CR>
+nnoremap <Leader>fif :Rg<CR>
+
+" Find files
+command! -bang -nargs=? -complete=dir Files
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--inline-info']}), <bang>0)
+
+" Make Ripgrep ONLY search file contents and not filenames
+command! -bang -nargs=* Rg
+            \ call fzf#vim#grep(
+            \   "rg --column --line-number --hidden --glob '!.git/**' --smart-case --no-heading --color=always ".shellescape(<q-args>), 1,
+            \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+            \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
+            \   <bang>0)
+
+" coc
+nmap <Leader>gd <Plug>(coc-definition)
+nmap <Leader>gr <Plug>(coc-references)
+nmap <Leader>gi <Plug>(coc-implementation)
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" trigger completion with <c-space>
+if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+else
+    inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and format on enter
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+    else
+        execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+endfunction
+
+" Format selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
