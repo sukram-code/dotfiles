@@ -30,6 +30,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 call plug#begin('~/.vim/plugged')
 Plug 'gruvbox-community/gruvbox'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' 
@@ -175,3 +176,10 @@ endfunction
 " Format selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+" dispatch
+autocmd FileType java let b:dispatch = 'javac %'
+autocmd FileType kotlin let b:dispatch = 'kotlinc %'
+
+nnoremap <Leader>mvp :Dispatch! mvn verify package<CR>
+nnoremap <Leader>qf :Copen<CR>
