@@ -77,17 +77,6 @@ let $RC="$HOME/.vim/vimrc"
 set splitbelow
 set splitright
 
-nnoremap <Leader>wv <C-W><C-V>
-nnoremap <Leader>ws <C-W><C-S>
-
-nnoremap <Leader>wc <C-W>c
-nnoremap <Leader>wo <C-W>o
-
-nnoremap <Leader>wj <C-W><C-J>
-nnoremap <Leader>wk <C-W><C-K>
-nnoremap <Leader>wl <C-W><C-L>
-nnoremap <Leader>wh <C-W><C-H>
-
 " FZF setup
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let $FZF_DEFAULT_OPTS = '--layout=reverse --inline-info'
