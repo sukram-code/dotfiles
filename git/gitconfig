@@ -1,3 +1,5 @@
 [user]
 	email = sukram.code@gmail.com
 	name = sukram-code
+[core]
+	eol = lf
