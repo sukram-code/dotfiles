@@ -55,10 +55,6 @@ inoremap <down> <NOP>
 inoremap <left> <NOP>
 inoremap <right> <NOP>
 
-" center cursor vertically
-nnoremap j jzz
-nnoremap k kzz
-
 let mapleader = " "
 
 " copy to primary buffer or clipboard
