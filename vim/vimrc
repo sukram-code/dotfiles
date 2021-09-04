@@ -167,6 +167,7 @@ autocmd FileType java let b:dispatch = 'javac %'
 autocmd FileType kotlin let b:dispatch = 'kotlinc %'
 
 nnoremap <Leader>mvp :Dispatch! mvn verify package<CR>
+nnoremap <Leader>cb :Dispatch! cargo build<CR>
 nnoremap <Leader>qf :Copen<CR>
 
 " The Primeagen TOP 5
