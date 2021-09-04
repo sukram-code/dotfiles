@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ln -sf $PWD/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+ls -l $HOME/.config/alacritty
+
