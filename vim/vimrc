@@ -63,9 +63,6 @@ noremap <Leader>p "*p
 noremap <Leader>Y "+y
 noremap <Leader>P "+p
 
-" insert current date
-map <Leader>D :put =strftime('%F')<CR>
-
 let $RTP=split(&runtimepath, ',')[0]
 let $RC="$HOME/.vim/vimrc"
 
@@ -147,6 +144,10 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " Show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" Jump between diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
