@@ -6,7 +6,7 @@ alias ls="ls --color=auto"
 alias ll="ls -la"
 alias vi=vim
 
-export PATH=$HOME/repos/gitlab.com/sukram-code/dotfiles/scripts:$PATH
+export PATH=$HOME/.idea-community/bin:$HOME/repos/gitlab.com/sukram-code/dotfiles/scripts:$PATH
 
 if command -v /usr/local/bin/vim &>/dev/null; then
   export EDITOR=/usr/local/bin/vim
