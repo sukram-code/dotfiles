@@ -1,0 +1,10 @@
+#!/bin/bash
+
+mkdir -pv $HOME/.config/nvim
+mkdir -pv $HOME/.config/nvim/lua/sukram
+mkdir -pv $HOME/.config/nvim/after/plugin
+
+ln -sf $PWD/init.lua $HOME/.config/nvim/init.lua
+ln -sf $PWD/lua/sukram/* $HOME/.config/nvim/lua/sukram/
+ln -sf $PWD/after/plugin/* $HOME/.config/nvim/after/plugin/
+
