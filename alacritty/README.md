@@ -1,0 +1,1 @@
+# Alacritty OpenGL Accelerated Terminal
