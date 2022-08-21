@@ -4,7 +4,8 @@ set -o vi
 
 alias ls="ls --color=auto"
 alias ll="ls -la"
-alias vi=vim
+alias vi=nvim
+alias vim=nvim
 
 export PATH=$HOME/.idea-community/bin:$HOME/repos/gitlab.com/sukram-code/dotfiles/scripts:$PATH
 
